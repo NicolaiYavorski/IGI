@@ -1,0 +1,60 @@
+﻿@model List<MasterViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Master management</h2>
+<br />
+
+@Html.ActionLink("Create master", "Create", "Master", new { }, new { @class = "btn btn-outline-info btn-sm" })
+<br /><br />
+@if (!Model.Any())
+{
+    <h4 style="color: firebrick;">There is no masters</h4>
+}
+else
+{
+    <div id="validation-message"></div>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Surname)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Phone)</th>
+            <th>@Html.DisplayNameFor(model => model[0].PassportId)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var master in Model)
+        {
+            <tr>
+                <td>@master.FirstName</td>
+                <td>@master.Surname</td>
+                <td>@master.Phone</td>
+                <td>@master.PassportId</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" onclick="Delete(@master.Id)" style="float: right; margin-left: 5px;">Delete</button>
+                    @Html.ActionLink("Update", "Update", "Master", new { masterId = master.Id }, new { @class = "btn btn-outline-primary btn-sm", style = "float: right" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    function Delete(id) {
+        $.ajax({
+            type: 'Get',
+            async: false,
+            url: '@Url.Action("Delete")',
+            data: {
+                masterId: id,
+            },
+            success: function () {
+                window.location.reload();
+            },
+            error: function (data) {
+                $('#validation-message').replaceWith(data);
+            }
+        });
+    }
+</script>

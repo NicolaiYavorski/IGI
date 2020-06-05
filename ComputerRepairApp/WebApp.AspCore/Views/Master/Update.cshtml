@@ -1,0 +1,49 @@
+﻿@model MasterViewModel
+@{
+    ViewBag.Title = "Update master";
+}
+
+<h2>@ViewBag.Title.</h2>
+<hr />
+<h4>Enter data to update the current master.</h4>
+<br />
+
+<form method="post" asp-action="Update" asp-controller="Master">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label class="col-2" asp-for="FirstName"></label>
+        <div class="col-6">
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="Surname"></label>
+        <div class="col-6">
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="Phone"></label>
+        <div class="col-6">
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="PassportId"></label>
+        <div class="col-6">
+            <input asp-for="PassportId" class="form-control" />
+            <span asp-validation-for="PassportId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-6">
+            <button type="submit" class="btn btn-outline-primary">Update</button>
+        </div>
+    </div>
+    <a asp-action="Index">Back to list</a>
+</form>

@@ -44,7 +44,7 @@ namespace ConsoleApp.UI.Pages
                 Console.Write("Phone: ");
                 Output.WriteLine(ConsoleColor.Green, client.Phone);
                 Console.Write("Passport id: ");
-                Output.WriteLine(ConsoleColor.Green, client.PasspordId);
+                Output.WriteLine(ConsoleColor.Green, client.PassportId);
             }
 
             Console.ReadKey();
@@ -66,7 +66,7 @@ namespace ConsoleApp.UI.Pages
                 Console.Write($"Phone: ");
                 master.Phone = Console.ReadLine();
                 Console.Write($"Passport id: ");
-                master.PasspordId = Console.ReadLine();
+                master.PassportId = Console.ReadLine();
 
                 _masterService.Add(master);
                 Output.WriteLine(ConsoleColor.Green, "Creation was successful");
@@ -96,7 +96,7 @@ namespace ConsoleApp.UI.Pages
                 Console.Write("Middle name: ");
                 master.Phone = Console.ReadLine();
                 Console.Write("Passport id: ");
-                master.PasspordId = Console.ReadLine();
+                master.PassportId = Console.ReadLine();
 
                 _masterService.Update(master);
                 Output.WriteLine(ConsoleColor.Green, "Update was successful");
@@ -127,7 +127,7 @@ namespace ConsoleApp.UI.Pages
                 Console.Write("Phone: ");
                 Output.WriteLine(ConsoleColor.Green, findClient.Phone);
                 Console.Write("Passport id: ");
-                Output.WriteLine(ConsoleColor.Green, findClient.PasspordId);
+                Output.WriteLine(ConsoleColor.Green, findClient.PassportId);
                 Console.ReadKey();
                 Program.NavigateTo<MasterPage>();
             }
