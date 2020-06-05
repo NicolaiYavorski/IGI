@@ -1,0 +1,47 @@
+﻿@model MasterViewModel
+@{
+    ViewBag.Title = "Master client";
+}
+
+<h2>@ViewBag.Title.</h2>
+<hr />
+<h4>Enter data to create a new master.</h4>
+<br />
+
+<form method="post" asp-action="Create" asp-controller="Master">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="col-2" asp-for="FirstName"></label>
+        <div class="col-6">
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="Surname"></label>
+        <div class="col-6">
+            @Html.TextBoxFor(model => model.Surname, new { @class = "form-control" })
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="Phone"></label>
+        <div class="col-6">
+            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="PassportId"></label>
+        <div class="col-6">
+            @Html.TextBoxFor(model => model.PassportId, new { @class = "form-control" })
+            <span asp-validation-for="PassportId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-6">
+            <button type="submit" class="btn btn-outline-primary">Create</button>
+        </div>
+    </div>
+    <a asp-action="Index">Back to list</a>
+</form>

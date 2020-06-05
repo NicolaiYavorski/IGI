@@ -1,0 +1,61 @@
+﻿@model List<OrderViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Order management</h2>
+<br />
+
+@Html.ActionLink("Create order", "Create", "Order", new { }, new { @class = "btn btn-outline-info btn-sm" })
+<br />
+<br />
+@if (!Model.Any())
+{
+    <h4 style="color: firebrick;">There is no orders</h4>
+}
+else
+{
+    <div id="validation-message"></div>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].Computer)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Malfunction)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Price)</th>
+            <th>@Html.DisplayNameFor(model => model[0].DateTime)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Computer</td>
+                <td>@order.Malfunction</td>
+                <td>@order.Price</td>
+                <td>@order.DateTime</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" onclick="Delete(@order.Id)" style="float: right; margin-left: 5px;">Delete</button>
+                    @Html.ActionLink("Update", "Update", "Order", new { orderId = order.Id }, new { @class = "btn btn-outline-primary btn-sm", style = "float: right" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    function Delete(id) {
+        $.ajax({
+            type: 'Get',
+            async: false,
+            url: '@Url.Action("Delete")',
+            data: {
+                orderId: id,
+            },
+            success: function (data) {
+                $('#validation-message').replaceWith(data);
+            },
+            error: function () {
+                window.location.reload();
+            }
+        });
+    }
+</script>

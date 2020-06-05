@@ -4,6 +4,7 @@ using BusinessLogic.Extensions;
 using BusinessLogic.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,6 +28,7 @@ namespace BusinessLogic.Services
         public int Add(OrderDto item)
         {
             item.CreateValidation();
+            item.DateTime = DateTimeOffset.Now;
             return _orderRepository.Create(_mapper.Map<OrderDto, Order>(item));
         }
 

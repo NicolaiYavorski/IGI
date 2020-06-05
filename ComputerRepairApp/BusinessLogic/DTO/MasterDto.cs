@@ -10,6 +10,6 @@
 
         public string Phone { get; set; }
 
-        public string PasspordId { get; set; }
+        public string PassportId { get; set; }
     }
 }

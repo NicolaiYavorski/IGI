@@ -1,0 +1,50 @@
+﻿@using BusinessLogic.Enums;
+@model OrderViewModel
+@{
+    ViewBag.Title = "Order client";
+}
+
+<h2>@ViewBag.Title.</h2>
+<hr />
+<h4>Enter data to create a new order.</h4>
+<br />
+
+<form method="post" asp-action="Update" asp-controller="Order">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label class="col-2" asp-for="Computer"></label>
+        <div class="col-6">
+            @Html.DropDownList("computer", Html.GetEnumSelectList(typeof(Computer)), new { @class = "form-control" })
+            <span asp-validation-for="Computer" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="Malfunction"></label>
+        <div class="col-6">
+            @Html.TextBoxFor(model => model.Malfunction, new { @class = "form-control" })
+            <span asp-validation-for="Malfunction" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="Price"></label>
+        <div class="col-6">
+            @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-2" asp-for="DateTime"></label>
+        <div class="col-6">
+            @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
+            <span asp-validation-for="DateTime" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-6">
+            <button type="submit" class="btn btn-outline-primary">Update</button>
+        </div>
+    </div>
+    <a asp-action="Index">Back to list</a>
+</form>

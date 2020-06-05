@@ -1,0 +1,63 @@
+﻿@model List<ClientViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Client management</h2>
+<br />
+
+@Html.ActionLink("Create client", "Create", "Client", new { }, new { @class = "btn btn-outline-info btn-sm" })
+<br />
+<br />
+@if (!Model.Any())
+{
+    <h4 style="color: firebrick;">There is no clients</h4>
+}
+else
+{
+    <div id="validation-message"></div>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Surname)</th>
+            <th>@Html.DisplayNameFor(model => model[0].MiddleName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Address)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Phone)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.FirstName</td>
+                <td>@client.Surname</td>
+                <td>@client.MiddleName</td>
+                <td>@client.Address</td>
+                <td>@client.Phone</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" onclick="Delete(@client.Id)" style="float: right; margin-left: 5px;">Delete</button>
+                    @Html.ActionLink("Update", "Update", "Client", new { clientId = client.Id }, new { @class = "btn btn-outline-primary btn-sm", style = "float: right" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    function Delete(id) {
+        $.ajax({
+            type: 'Get',
+            async: false,
+            url: '@Url.Action("Delete")',
+            data: {
+                clientId: id,
+            },
+            success: function () {
+                window.location.reload();
+            },
+            error: function (data) {
+                $('#validation-message').replaceWith(data);
+            }
+        });
+    }
+</script>
