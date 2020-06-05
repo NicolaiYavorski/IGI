@@ -1,15 +1,15 @@
 using Autofac;
 using BusinessLogic.Utils;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Globalization;
-using WebApp.AspCore.Settings;
+using WebApp.AspCore.Infrastructure;
+using WebApp.AspCore.Interfaces;
+using WebApp.AspCore.Services;
 
 namespace WebApp.AspCore
 {
@@ -24,13 +24,19 @@ namespace WebApp.AspCore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var computerRepairSettings = Configuration.GetSection(nameof(ComputerRepairSettings)).Get<ComputerRepairSettings>();
-            services.AddControllersWithViews();
+            var connectionString = Configuration.GetConnectionString("IdentityContext");
+            services.AddDbContext<IdentityAppContext>(options => options.UseSqlServer(connectionString));
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture("en");
-            });
+              services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<IdentityAppContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddControllersWithViews();
+                services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(option => option.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login"));
 
             services.AddMvcCore(options =>
             {
@@ -48,17 +54,10 @@ namespace WebApp.AspCore
             builder.RegisterModule(new BllModule(options));
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+            app.UseDeveloperExceptionPage();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
