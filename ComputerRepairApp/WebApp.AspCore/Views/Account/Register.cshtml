@@ -1,0 +1,45 @@
+﻿@model Register
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>@ViewData["Title"].</h2>
+<hr />
+<h4 style="text-align: left;">Create a new account.</h4>
+<br />
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post" asp-controller="Account" asp-action="Register">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-4 control-label" })
+                <div class="col-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-4 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PasswordConfirm, new { @class = "col-4 control-label" })
+                <div class="col-10">
+                    @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PasswordConfirm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-10">
+                    <input type="submit" value="Register" class="btn btn-outline-primary" />
+                </div>
+            </div>
+            @Html.ActionLink("Login as a registered user", "Login")
+        </form>
+    </div>
+</div>

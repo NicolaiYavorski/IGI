@@ -1,0 +1,57 @@
+﻿@model List<RoleViewModel>
+@{
+    ViewBag.Title = "Role";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@Html.ActionLink("Create role", "Create", "Role", new { }, new { @class = "btn btn-outline-info btn-sm" })
+<br />
+<br />
+@if (!Model.Any())
+{
+    <h4 style="color: firebrick;">There is no roles</h4>
+}
+else
+{
+    <div id="validation-message"></div>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Description)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>@role.Description</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" onclick="Delete(@role.Id)" type="submit" style="float: right; margin-left: 5px;">Delete</button>
+                    @Html.ActionLink("Update", "Edit", new { roleId = role.Id }, new { @class = "btn btn-outline-primary btn-sm", style = "float: right" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    function Delete(id) {
+        $.ajax({
+            type: 'Get',
+            async: false,
+            url: '@Url.Action("Delete")',
+            data: {
+                roleId: id,
+            },
+            success: function () {
+                window.location.reload();
+            },
+            error: function (data) {
+                $('#validation-message').replaceWith(data);
+            }
+        });
+    }
+</script>

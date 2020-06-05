@@ -17,11 +17,26 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Account" asp-action="Index">@User.Identity.Name</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Log out</a></li>
+                        }
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Log in</a></li>
+                        }
+                    </ul>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" asp-controller="Client" asp-action="Index">Client</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" asp-controller="Master" asp-action="Index">Master</a></li>
                         <li class="nav-item"><a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Order</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-controller="Role" asp-action="Index">Role</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-controller="User" asp-action="Index">User</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-controller="Home" asp-action="Help">Helper</a></li>
                     </ul>
                 </div>
             </div>

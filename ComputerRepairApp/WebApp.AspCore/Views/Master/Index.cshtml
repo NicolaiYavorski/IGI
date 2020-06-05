@@ -1,13 +1,14 @@
 ﻿@model List<MasterViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Master management";
 }
 
-<h2>Master management</h2>
+<h2>@ViewBag.Title.</h2>
 <br />
 
 @Html.ActionLink("Create master", "Create", "Master", new { }, new { @class = "btn btn-outline-info btn-sm" })
-<br /><br />
+<br />
+<br />
 @if (!Model.Any())
 {
     <h4 style="color: firebrick;">There is no masters</h4>

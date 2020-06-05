@@ -1,0 +1,57 @@
+﻿@model List<UserViewModel>
+@{
+    ViewBag.Title = "User";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<br />
+
+@if (!Model.Any())
+{
+    <h4 style="color: firebrick;">There is no users</h4>
+}
+else
+{
+    <div id="validation-message"></div>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].Email)</th>
+            <th>@Html.DisplayNameFor(model => model[0].FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Surname)</th>
+            <th></th>
+        </tr>
+
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.FirstName</td>
+                <td>@user.Surname</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm" onclick="Delete(@user.Id)" type="submit" style="float: right; margin-left: 5px;">Delete</button>
+                    @Html.ActionLink("Update", "Edit", new { userId = user.Id }, new { @class = "btn btn-outline-primary btn-sm", style = "float: right" })
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<script>
+    function Delete(id) {
+        $.ajax({
+            type: 'Get',
+            async: false,
+            url: '@Url.Action("Delete")',
+            data: {
+                userId: id,
+            },
+            success: function () {
+                window.location.reload();
+            },
+            error: function (data) {
+                $('#validation-message').replaceWith(data);
+            }
+        });
+    }
+</script>
